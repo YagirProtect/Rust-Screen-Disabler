@@ -16,11 +16,24 @@ fn main() {
             panic!("Failed to initialize global hot key manager");
         }
     };
+    
+    #[cfg(any(target_os = "windows", target_os = "macos"))]
+    {
+        match hot_key_manager.register(HotKey::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::F11)) {
+            Ok(_) => {},
+            Err(_) => {
+                panic!("Failed to register hot key manager");
+            }
+        }
+    }
 
-    match hot_key_manager.register(HotKey::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::F11)){
-        Ok(_) => {},
-        Err(_) => {
-            panic!("Failed to register hot key manager");
+    #[cfg(target_os = "linux")]
+    {
+        match hot_key_manager.register(HotKey::new(Some(Modifiers::CONTROL | Modifiers::SUPER), Code::F11)) {
+            Ok(_) => {},
+            Err(_) => {
+                panic!("Failed to register hot key manager");
+            }
         }
     }
 
