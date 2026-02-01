@@ -20,7 +20,7 @@ pub fn active_screen() -> io::Result<()>{
 pub fn disable_screen() -> io::Result<()> {
 
     #[cfg(target_os = "windows")]
-    return os::windows::set_monitor_power(true);
+    return os::windows::set_monitor_power(false);
 
     #[cfg(target_os = "macos")]
     return os::macos::display_wake();
@@ -42,7 +42,7 @@ pub fn show_text() {
 
     #[cfg(target_os = "linux")]
     {
-        println!("Use Ctrl + Super + F11 to toggle a screen");
+        println!("Use Ctrl + Alt + K to toggle a screen");
         return;
     }
 
