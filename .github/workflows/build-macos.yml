@@ -1,0 +1,37 @@
+name: build-macos
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-apple-darwin,aarch64-apple-darwin
+
+      - name: Build x86_64 (Intel)
+        run: cargo build --release --target x86_64-apple-darwin
+
+      - name: Build aarch64 (Apple Silicon)
+        run: cargo build --release --target aarch64-apple-darwin
+
+      - name: Create universal binary
+        run: |
+          mkdir -p dist
+          lipo -create \
+            target/x86_64-apple-darwin/release/screen-disabler \
+            target/aarch64-apple-darwin/release/screen-disabler \
+            -output dist/screen-disabler-universal
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-binaries
+          path: |
+            target/x86_64-apple-darwin/release/screen-disabler
+            target/aarch64-apple-darwin/release/screen-disabler
+            dist/screen-disabler-universal
