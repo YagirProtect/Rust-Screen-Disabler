@@ -24,7 +24,7 @@ fn main() {
         }
     }
 
-    println!("Use Ctrl+Alt+F11 to toggle a screen");
+    screen::show_text();
 
 
     let screen_active = Arc::new(AtomicBool::new(false));

@@ -24,9 +24,9 @@ jobs:
         run: |
           mkdir -p dist
           lipo -create \
-            target/x86_64-apple-darwin/release/screen-disabler \
-            target/aarch64-apple-darwin/release/screen-disabler \
-            -output dist/screen-disabler-universal
+            target/x86_64-apple-darwin/release/SCREEN-DISABLER \
+            target/aarch64-apple-darwin/release/SCREEN-DISABLER \
+            -output dist/SCREEN-DISABLER-universal
 
       - uses: actions/upload-artifact@v4
         with:

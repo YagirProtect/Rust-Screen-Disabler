@@ -3,7 +3,7 @@ use crate::os;
 
 pub fn active_screen() -> io::Result<()>{
 
-    #[cfg(windows)]
+    #[cfg(target_os = "windows")]
     return os::windows::set_monitor_power(true);
 
     #[cfg(target_os = "macos")]
@@ -19,7 +19,7 @@ pub fn active_screen() -> io::Result<()>{
 
 pub fn disable_screen() -> io::Result<()> {
 
-    #[cfg(windows)]
+    #[cfg(target_os = "windows")]
     return os::windows::set_monitor_power(true);
 
     #[cfg(target_os = "macos")]
@@ -30,4 +30,27 @@ pub fn disable_screen() -> io::Result<()> {
 
     #[allow(unreachable_code)]
     Err(io::Error::new(io::ErrorKind::Other, "unsupported OS"))
+}
+
+pub fn show_text() {
+    #[cfg(target_os = "windows")]
+    {
+        println!("Use Ctrl+Alt+F11 to toggle a screen");
+        return;
+    }
+
+
+    #[cfg(target_os = "linux")]
+    {
+        println!("Use Ctrl+Alt+F11 to toggle a screen");
+        return;
+    }
+
+    #[cfg(target_os = "macos")]
+    {
+        println!("Use Ctrl+Alt+F11 to toggle a screen");
+        return;
+    }
+
+
 }
