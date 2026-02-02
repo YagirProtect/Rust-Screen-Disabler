@@ -26,8 +26,6 @@ fn main() {
                     continue;
                 }
 
-
-
                 let res = if event.id == off_id {
                     screen::disable_screen()
                 } else if event.id == on_id {
