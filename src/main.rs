@@ -1,50 +1,23 @@
 mod screen;
 mod os;
+mod keys;
 
-use std::sync::Arc;
-use std::sync::atomic::{AtomicBool, Ordering};
-use global_hotkey::hotkey::{Code, Modifiers};
 use global_hotkey::{GlobalHotKeyEvent, GlobalHotKeyManager, HotKeyState};
-use global_hotkey::hotkey::HotKey;
 use tao::event_loop::{ControlFlow, EventLoop};
 
 fn main() {
     let event_loop = EventLoop::new();
-    let hot_key_manager = match GlobalHotKeyManager::new(){
+    let mut hot_key_manager = match GlobalHotKeyManager::new(){
         Ok(h) => h,
         _ => {
             panic!("Failed to initialize global hot key manager");
         }
     };
 
-    #[cfg(any(target_os = "windows", target_os = "macos"))]
-    {
-        match hot_key_manager.register(HotKey::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::F11)) {
-            Ok(_) => {},
-            Err(_) => {
-                panic!("Failed to register hot key manager");
-            }
-        }
-    }
-
-    #[cfg(target_os = "linux")]
-    {
-        match hot_key_manager.register(HotKey::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::KeyK)) {
-            Ok(_) => {},
-            Err(_) => {
-                panic!("Failed to register hot key manager");
-            }
-        }
-    }
-
+    let (on_id, off_id) = keys::register_keycodes(&mut hot_key_manager);
     screen::show_text();
 
-
-    let screen_active = Arc::new(AtomicBool::new(false));
-
-
     {
-        let screen_active = Arc::clone(&screen_active);
         std::thread::spawn(move || {
             let reciever = GlobalHotKeyEvent::receiver();
 
@@ -55,16 +28,16 @@ fn main() {
 
 
 
-                let target_active = !screen_active.load(Ordering::Relaxed);
-                let res = if target_active { screen::disable_screen() } else { screen::active_screen() };
+                let res = if event.id == off_id {
+                    screen::disable_screen()
+                } else if event.id == on_id {
+                    screen::active_screen()
+                } else {
+                    continue;
+                };
 
-                match res {
-                    Ok(()) => {
-                        screen_active.store(target_active, Ordering::Relaxed)
-                    }
-                    Err(e) => {
-                        eprintln!("[screenoff] {e}")
-                    }
+                if let Err(e) = res {
+                    eprintln!("[screenoff] {e}");
                 }
             }
         });
