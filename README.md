@@ -7,7 +7,7 @@ This project is a practical playground where I learned how to:
 - call native OS APIs / system tools (WinAPI, `xset`, `pmset`)
 - set up **GitHub Actions** workflows for Windows / Linux / macOS builds + artifacts
 
-Created without vibecoding.
+Created without vibecoding. Only hard teaching exipience and test on many platforms and crys
 
 * * *
 
