@@ -32,28 +32,58 @@ pub fn disable_screen() -> io::Result<()> {
     Err(io::Error::new(io::ErrorKind::Other, "unsupported OS"))
 }
 
+use crossterm::style::{PrintStyledContent, Stylize};
+
 pub fn show_text() {
+
+    print_banner();
+
+    println!("This little tool will allow you to turn on and off the screen\nby pressing a key combination.\n");
+
     #[cfg(target_os = "windows")]
     {
-        println!("Use Ctrl + Alt + F11 to off a screen");
-        println!("Use Ctrl + Alt + F12 to on a screen");
+        print!("{}", PrintStyledContent("[Ctrl + Alt + F11]".cyan().bold()));
+        println!(" - Disable screen");
+        print!("{}", PrintStyledContent("[Ctrl + Alt + F12]".cyan().bold()));
+        println!(" - Enable screen");
         return;
     }
 
-
     #[cfg(target_os = "linux")]
     {
-        println!("Use Ctrl + Alt + K to off a screen");
-        println!("Use Ctrl + Alt + L to on a screen");
+        print!("{}", PrintStyledContent("[Ctrl + Alt + K]".cyan().bold()));
+        println!(" - Disable screen");
+        print!("{}", PrintStyledContent("[Ctrl + Alt + L]".cyan().bold()));
+        println!(" - Enable screen");
         return;
     }
 
     #[cfg(target_os = "macos")]
     {
-        println!("Use Control + Option + F11 to off a screen");
-        println!("Use Control + Option + F12 to on a screen");
+        print!("{}", PrintStyledContent("[Control + Option + F11]".cyan().bold()));
+        println!(" - Disable screen");
+        print!("{}", PrintStyledContent("[Control + Option + F12]".cyan().bold()));
+        println!(" - Enable screen");
         return;
     }
 }
+pub fn print_banner() {
+    println!(r#"
+███████╗ ██████╗██████╗ ███████╗███████╗███╗   ██╗
+██╔════╝██╔════╝██╔══██╗██╔════╝██╔════╝████╗  ██║
+███████╗██║     ██████╔╝█████╗  █████╗  ██╔██╗ ██║
+╚════██║██║     ██╔══██╗██╔══╝  ██╔══╝  ██║╚██╗██║
+███████║╚██████╗██║  ██║███████╗███████╗██║ ╚████║
+╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝
+      ██████╗ ██╗███████╗ █████╗ ██████╗ ██╗     ███████╗██████╗
+      ██╔══██╗██║██╔════╝██╔══██╗██╔══██╗██║     ██╔════╝██╔══██╗
+      ██║  ██║██║███████╗███████║██████╔╝██║     █████╗  ██████╔╝
+      ██║  ██║██║╚════██║██╔══██║██╔══██╗██║     ██╔══╝  ██╔══██╗
+      ██████╔╝██║███████║██║  ██║██████╔╝███████╗███████╗██║  ██║
+      ╚═════╝ ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝
+
+"#);
+}
+
 
 

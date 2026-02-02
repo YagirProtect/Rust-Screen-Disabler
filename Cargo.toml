@@ -9,6 +9,14 @@ embed-resource = "3.0.6"
 [dependencies]
 global-hotkey = "0.7.0"
 tao = "0.34.5"
+crossterm = "0.29.0"
 
 [target.'cfg(windows)'.dependencies]
 windows-sys = { version = "0.61.2", features = ["Win32_UI_WindowsAndMessaging", "Win32_System_Console"] }
+
+
+
+[package.metadata.bundle]
+name = "Screen Disabler"
+identifier = "com.yagir.screen-disabler"
+icon = ["assets/icon.icns", "assets/icon.ico", "assets/icon.png"]
