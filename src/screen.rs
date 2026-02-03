@@ -60,9 +60,9 @@ pub fn show_text() {
 
     #[cfg(target_os = "macos")]
     {
-        print!("{}", PrintStyledContent("[Control + Option + F11]".cyan().bold()));
+        print!("{}", PrintStyledContent("[Control + Option + K]".cyan().bold()));
         println!(" - Disable screen");
-        print!("{}", PrintStyledContent("[Control + Option + F12]".cyan().bold()));
+        print!("{}", PrintStyledContent("[Control + Option + L]".cyan().bold()));
         println!(" - Enable screen");
         return;
     }

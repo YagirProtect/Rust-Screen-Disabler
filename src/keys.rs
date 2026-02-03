@@ -26,14 +26,14 @@ pub fn register_keycodes(hotkey_manager: &mut GlobalHotKeyManager) -> (u32, u32)
 
 
 fn get_on_key() -> HotKey{
-    #[cfg(target_os = "linux")]
+    #[cfg(any(target_os = "linux", target_os = "macos"))]
     return HotKey::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::KeyL);
 
     HotKey::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::F12)
 }
 
 fn get_off_key() -> HotKey{
-    #[cfg(target_os = "linux")]
+    #[cfg(any(target_os = "linux", target_os = "macos"))]
     return HotKey::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::KeyK);
 
     HotKey::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::F11)
