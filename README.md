@@ -9,6 +9,14 @@ This project is a practical playground where I learned how to:
 
 Created without vibecoding. Only hard teaching exipience and test on many platforms and crys
 
+
+---
+
+## Screenshots
+
+<img src="/Screenshot.png" width="49%" />
+
+
 * * *
 
 ## What it does
